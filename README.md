@@ -1,6 +1,5 @@
 # Numerical-Methods
 Repo containing commonly used numerical methods in problem solving.
-File nummeth.h contains equation solving, integration and differentiation functions.
 
 Version
 
