@@ -3,8 +3,8 @@ Repo containing commonly used numerical methods in problem solving.
 
 Version
 
-v1.0 (Feb 2021)
-Initial version.
+<h1>v1.0 (Feb 2021)
+<h2>Initial version.
 
 Differentiation:
 - Derivative 
