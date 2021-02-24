@@ -2,8 +2,6 @@
 
 //
 // Bisec Method
-//      Variables:
-//          fun - function 
 //
 double Bisec(double (*fun)(double), double leftEnd, double rightEnd, double tolerance, int maxIter)
 {
@@ -31,8 +29,6 @@ double Bisec(double (*fun)(double), double leftEnd, double rightEnd, double tole
 }
 //
 // Falsi Method
-//      Variables:
-//          fun - function 
 //
 double Falsi(double (*fun)(double), double leftEnd, double rightEnd, double tolerance, int maxIter)
 {
