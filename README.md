@@ -6,7 +6,7 @@ Version
 <h2>v1.0 (Feb 2021)
 <h3>Initial version.
   
-<h4>Differentiation:
+Differentiation:
 - Derivative 
 
 Integration:
