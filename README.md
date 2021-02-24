@@ -1,10 +1,10 @@
 # Numerical-Methods
 Repo containing commonly used numerical methods in problem solving.
 
-Version
+## Version
 
-## v1.0 (Feb 2021)
-### Initial version.
+### v1.0 (Feb 2021)
+#### Initial version.
   
 Differentiation:
 - Derivative 
