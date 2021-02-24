@@ -1,7 +1,7 @@
 # Numerical-Methods
 Repo containing commonly used numerical methods in problem solving.
 
-## Version
+## Versions
 
 ### v1.0 (Feb 2021)
 #### Initial version.
