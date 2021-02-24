@@ -1,5 +1,6 @@
 # Numerical-Methods
 Repo containing commonly used numerical methods in problem solving.
+
 The only puropses of this repo are to get a better understanging how calculations are performed by more complex software and to have simple code at hand.
 
 ## Versions
