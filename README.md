@@ -8,7 +8,7 @@ The only puropses of this repo are to get a better understanging how calculation
 v1.1 (Feb 2021)
 
 Added:
-Differentiation:
+1. Differentiation:
 - Runge-Kutta 4th order method
 - Euler method
 
