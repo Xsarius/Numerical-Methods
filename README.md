@@ -5,7 +5,7 @@ The only puropses of this repo are to get a better understanging how calculation
 
 ## Versions
 
-v1.1 (Feb 2021)
+### v1.1 (Feb 2021)
 
 Added:
 - Differentiation:
