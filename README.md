@@ -22,6 +22,7 @@ The only puropses of this repo are to get a better understanging how calculation
 - Matricies:
     - Linear System solver
 
+#### Content:
 
 Differentiation:
 - Derivative 
@@ -51,6 +52,7 @@ Root finding:
     - Runge-Kutta 4th order method
     - Euler method
 
+#### Content:
 
 Differentiation:
 - Derivative 
@@ -71,6 +73,8 @@ Root finding:
 
 ### v1.0 (Feb 2021)
 #### Initial version.
+
+#### Content:
 
 Differentiation:
 - Derivative 
