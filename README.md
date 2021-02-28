@@ -24,24 +24,30 @@ The only puropses of this repo are to get a better understanging how calculation
 
 #### Content:
 
-Differentiation:
-- Derivative 
-- Runge-Kutta 4th order method
-- Euler method
+- Differentiation:
+    - Derivative 
+    - Runge-Kutta 4th order method
+    - Euler method
 
-Integration:
-- Simpson method
-- Trapeze method
+- Integration:
+    - Simpson method
+    - Trapeze method
 
-Interpolation:
-- Lagrange
+- Interpolation:
+    - Lagrange
 
-Root finding:
-- Muller method
-- Bisec method
-- Regula falsi method
-- Newton method
-- Secant method
+- Root finding:
+    - Muller method
+    - Bisec method
+    - Regula falsi method
+    - Newton method
+    - Secant method
+
+- Functions:
+    - Radial Basis function
+
+- Matricies:
+    - Linear System solver
 
 ---
 
@@ -54,20 +60,20 @@ Root finding:
 
 #### Content:
 
-Differentiation:
-- Derivative 
-- Runge-Kutta 4th order method
-- Euler method
+- Differentiation:
+    - Derivative 
+    - Runge-Kutta 4th order method
+    - Euler method
 
-Integration:
-- Simpson method
-- Trapeze method
+- Integration:
+    - Simpson method
+    - Trapeze method
 
-Root finding:
-- Bisec method
-- Regula falsi method
-- Newton method
-- Secant method
+- Root finding:
+    - Bisec method
+    - Regula falsi method
+    - Newton method
+    - Secant method
 
 ---
 
@@ -76,15 +82,15 @@ Root finding:
 
 #### Content:
 
-Differentiation:
-- Derivative 
+- Differentiation:
+    - Derivative 
 
-Integration:
-- Simpson method
-- Trapeze method
+- Integration:
+    - Simpson method
+    - Trapeze method
 
-Root finding:
-- Bisec method
-- Regula falsi method
-- Newton method
-- Secant method
+- Root finding:
+    - Bisec method
+    - Regula falsi method
+    - Newton method
+    - Secant method
