@@ -5,7 +5,7 @@ The only puropses of this repo are to get a better understanging how calculation
 
 ## Versions
 
-### v1.2 (Mar 2021)
+### v1.2 (Feb 2021)
 
 #### Added: 
 - Root finding:
