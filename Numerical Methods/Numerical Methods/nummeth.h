@@ -5,6 +5,23 @@
 // Last update: Feb 2021
 //
 #include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define MAX_MATRIX_SIZE 100 // Arbitrarly chosen value - it's only necessary to code be compileable as C.
+
+//////////////////////////
+//  Struct declaration //
+////////////////////////
+//
+// Data
+//  Summary:
+//     
+//
+struct Point
+{
+    double x, y;
+};
 
   //////////////////////////
  // Function declaration //
@@ -12,6 +29,33 @@
 //  
 //  Equation solver //
 //
+// Muller method
+//
+//  Summary:
+//      The actual root is aproximated by creating quadratic formula, based on 3 guesses (root 1,2,3).
+//        If aproximation is to far away from real root, guess root's are adjusted and proccess iterates 
+//        untill value in the tolerance range is obtained.
+//  
+//      Pros:
+//       - Solves imaginary roots
+//       - Doesn't require derivatives
+//
+//      Cons:
+//       - Extraneous roots can be obtained
+//       - Possible big error
+//
+//  Variables:
+//      function - primary function
+//
+//      rootOne - first root guess 
+//
+//      rootTwo - second root guess
+//
+//      rootThree - third root guess
+//  Returns:
+//      Aproximation of the function root.   
+//
+double Muller(double (*function)(double), double rootOne, double rootTwo, double rootThree, double tolerance, int maxIterations);
 // Bisec method
 //  Summary:
 //      Bisec aproximation of function root value in given a to b range.
@@ -26,12 +70,12 @@
 //
 //      tolerance - root aproximation error
 //
-//      maxIter - maximal number of function iteration (corresponds to accuracy of the aproximation)
+//      maxIterations - maximal number of function iteration (corresponds to accuracy of the aproximation)
 //
 //  Returns:
 //      Aproximation of the function root.   
 //  
-double Bisec(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIter);
+double Bisec(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIterations);
 //
 // Falsi method
 //  Summary:
@@ -46,12 +90,12 @@ double Bisec(double (*function)(double), double leftEnd, double rightEnd, double
 //
 //      tolerance - root aproximation error
 //
-//      maxIter - maximal number of function iteration (corresponds to accuracy of the aproximation)
+//      maxIterations - maximal number of function iteration (corresponds to accuracy of the aproximation)
 //
 //  Returns:
 //      Aproximation of the function root.   
 //  
-double Falsi(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIter);
+double Falsi(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIterations);
 //
 // Newton method
 //  Summary:
@@ -67,12 +111,12 @@ double Falsi(double (*function)(double), double leftEnd, double rightEnd, double
 //
 //      epsilon - 
 //
-//      maxIter - maximal number of function iteration (corresponds to accuracy of the aproximation)
+//      maxIterations - maximal number of function iteration (corresponds to accuracy of the aproximation)
 //
 //  Returns:
 //      Root of the function, nearest to the initial guess point.            
 //  
-double Newton(double (*function)(double), double guess, double tolerance, double epsilon, int maxIter);
+double Newton(double (*function)(double), double guess, double tolerance, double epsilon, int maxIterations);
 //
 // Secant method
 //  Summary:
@@ -88,12 +132,12 @@ double Newton(double (*function)(double), double guess, double tolerance, double
 //
 //      tolerance - root aproximation error
 //
-//      maxIter - maximal number of function iteration (corresponds to accuracy of the aproximation)
+//      maxIterations - maximal number of function iteration (corresponds to accuracy of the aproximation)
 //
 //  Returns:
 //      Aproximation of the function root.     
 //  
-double Secant(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIter);
+double Secant(double (*function)(double), double leftEnd, double rightEnd, double tolerance, int maxIterations);
 //
 //  Integration //
 //
@@ -157,7 +201,7 @@ double Deriv(double (*function)(double), double);
 // Euler method
 //
 //  Summary:
-//      First order method for solving ODEs with a given initial conditions.
+//      Method for solving first order ODEs with given initial conditions.
 //        It have stict region of stability. If {h,k c C} |h*k| > 1 where h - step size, k - solution exponent coeff, 
 //        then numerical solution will diverge. 
 //  Variables:
@@ -179,7 +223,8 @@ double Euler(double (*function)(double, double), double x0, double y0, double ma
 // Runge-Kutta 4th method
 //
 //  Summary:
-//            
+//      Method for solving first order ODEs with given initial conditions.
+//        It's much more accurate than euler method, but it's more resource and time consumming.      
 //
 //  Variables:
 //      function - primary function
@@ -196,6 +241,96 @@ double Euler(double (*function)(double, double), double x0, double y0, double ma
 //      Value of the ODE at given x (maximalX) point.    
 //
 double RungeKutta(double (*function)(double, double), double x0, double y0, double maximalX, double stepSize);
+//
+//  Interpolation //
+//
+// Lagrange's Interpolation
+//
+//  Summary:
+//      Method of finding new data points within the range of a known data points.
+//
+//  Variables:
+//      point[] - array of the Point type, containing combined known arguments with their values.
+//      
+//      ptsNum - number of all known points.
+//
+//      x - point which is to be obtained in the interpolation.
+//
+//  Returns:
+//      Value of a point at given argument x.
+//
+double Lagrange(Point point[], int x, int ptsNum);
+//
+// Linear Interpolation
+//
+//  Summary:
+//      Method of finding new data points within the range of a known data points.
+//
+//  Variables:
+//      point[] - array of the Point type, containing combined known arguments with their values 
+//                  of two nearest points to wanted point.
+//
+//      x - wanted point.
+//
+//  Returns:
+//      Value aproximation at point x.
+//
+double Linear(Point point[2], double x);
+//
+// GaussRBF Interpolation
+//
+//  Summary:
+//      Method of finding new data points within the range of a known data points.
+//  Variables:
+//      points - array of known points combined, arguments with their values.
+//
+//      x - wanted point.
+//
+//      shapeParameter - arbitrarly chosen natural number, values << 1 are recommended if distance between points is big > 0.1
+//                        and >> 1 if distance is small (1e-3 order).
+//
+//  Returns:
+//      Value aproximation at point x.
+//
+double RBFIterpolation(Point points[], double x, double shapeParameter);
+//
+//  Functions //
+//
+// Gauss radial basis function (GaussRBF)
+//
+//  Summary:
+//      Function whose value depends on the distance between the input and some fixed point.
+//      
+//  Variables:
+//      r - distance between chosen point and reference point.
+//
+//      eps - shape factor, can be arbitrarly chosen natural number. 
+//  Returns:
+//
+//
+double GaussRBF(double r, double eps);
+//
+//  Matricies //
+//
+// Linear System Solver
+//
+//  Summary:
+//      Function solves system of the linear equations AX = B.
+//       It does not provide not quadratic matrix protection,
+//       which means, the user should make sure to input quadratic matrix A
+//       and X, B to be coresponding size.
+//  
+//  Variables:
+//      matricies1DSize - size of arrays.
+//
+//      coefficientsMatrix - array with unknowns coefficients in each of systems equation.
+//
+//      valueMatrix - array with known values of the system. 
+//
+//      unknownsMatrix - array in which the results will be saved.
+//
+void SolveLinearSystem(int matricies1DSize,double coefficientsMatrix[][MAX_MATRIX_SIZE], double valueMatrix[], double unknownsMatrix[]);
+
 
 
 

@@ -1,7 +1,42 @@
 #include "nummeth.h"
 
 //
-// Bisec root Method
+// Muller method
+//
+double Muller(double (*f)(double), double p1, double p2, double p3, double tol, int n)
+{
+    double res = 0, a, b, c, delta, x1, x2;
+
+    for (int i = 0; i < n; ++i)
+    {
+        a = (f(p3) - f(p1) - (p3-p1)*((f(p2)-f(p1))/(p2-p1)))/(pow(p3,2.)-pow(p1,2.)-(p3-p1)*((pow(p2,2.) - pow(p3,2.))/(p2-p1)));
+        b = (f(p2)-f(p1)-a*(pow(p2,2.)-pow(p1,2.)))/(p2-p1);
+        c = f(p1) - a*pow(p1,2.) - b * p1;
+        
+        delta = pow(b,2.)-4*a*c;
+
+        x1 = (-b - sqrt(delta))/(2*a);
+        x2 = (-b + sqrt(delta))/(2*a);
+
+        if(fabs(f(x1)) < fabs(f(x2)))
+        {
+            res = x1;
+        }
+        else
+        {
+            res = x2;
+        }
+
+        if(fabs(f(res)) < tol)
+        {
+            return res;
+        }
+
+        p1 = res;
+    }
+}
+//
+// Bisec root method
 //  
 double Bisec(double (*f)(double), double a, double b, double tol, int n)
 {
@@ -28,7 +63,7 @@ double Bisec(double (*f)(double), double a, double b, double tol, int n)
     
 }
 //
-// Falsi root Method
+// Falsi root method
 //   
 double Falsi(double (*f)(double), double a, double b, double tol, int n)
 {
@@ -152,7 +187,7 @@ double Deriv(double (*f)(double), double x)
 double Simpson(double (*f)(double), double a, double b, int n)
 {
     double area = f(a) + f(b);
-    double h = (b-a)/(n-1);
+    double h = (b-a)/double(n-1);
 
     for (int i = 0; i < n; i++)
     {
@@ -225,4 +260,170 @@ double RungeKutta(double (*f)(double, double), double x0, double y0, double x, d
     }
     
     return y;
+}
+//
+// Lagrange interpolation
+//
+double Lagrange(Point p[], int x, int n)
+{
+    double r = 0, term = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        term = p[i].y;
+        for (int j = 0; j < n; j++)
+        {
+            if(j != i)
+            {
+            term *= (x - p[j].x)/(double)(p[i].x - p[j].x);
+            }   
+        }
+        
+        r += term;
+    }
+    
+    return r;
+}
+//
+// Bilinear interpolation
+//
+double Linear(Point p[2], double x)
+{
+    double m = (p[1].y-p[0].y)/(p[1].x-p[0].x);
+    double b = p[0].y - m*p[0].x;
+
+    return b + x*m;
+}
+//
+// Radial Basis Interpolation
+//
+double RBFIterpolation(Point point[], double x0, double eps)
+{
+    int n = 3;
+
+    double A[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE];
+
+    double *lambda = (double *)malloc(n * sizeof(double));
+    double *b = (double *)malloc(n * sizeof(double));
+    
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            A[j][i] = RBF(fabs(point[j].x - point[i].x), eps);
+        }
+     
+        b[i] = point[i].y;
+    }
+
+    SolveLinearSystem(n, A, b, lambda);
+
+    double y0 = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+            y0 += lambda[i]*RBF(fabs(x0 - point[i].x), eps);
+    }
+    
+
+    free(lambda);
+    free(b);
+
+    return y0;
+}
+//
+// Gaussian Radial Basis Function 
+//
+double RBF(double r, double eps)
+{
+    return exp(-eps*pow(r, 2.));
+}
+//
+// Matrix equation solver
+//
+void SolveLinearSystem(int n ,double A[][MAX_MATRIX_SIZE], double B[], double X[])
+{
+
+    double **L = (double **)malloc(sizeof(double *) * n);
+    double **U = (double **)malloc(sizeof(double *) * n);
+
+    for (int i = 0; i < n; i++)
+    {
+        L[i] = (double *)malloc(n * sizeof(double));
+        U[i] = (double *)malloc(n * sizeof(double));
+    }
+
+    double *Y = (double *)malloc(sizeof(double) * n);
+    
+    // Calculating lower L and upper U matricies
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = i; k < n; k++)
+        {
+            double sum = 0;
+
+            for (int j = 0; j < i; j++)
+            {
+                sum += L[i][j] * U[j][k];
+            }
+
+            U[i][k] = A[i][k] - sum;
+        }
+
+        for (int k = 0; k < n; k++)
+        {
+            if( i == k)
+            {
+                L[i][i] = 1;
+            }
+
+            else
+            {
+                double sum =0;
+
+                for (int j = 0; j < i; j++)
+                {
+                        sum += L[k][j] * U[j][i];
+                }
+
+                L[k][i] = (A[k][i] - sum) / U[i][i];
+                
+            }
+        } 
+    }
+
+    // Calculating temporary Y matrix
+    for(int i=0; i<n; i++)
+    {
+        Y[i]=B[i];
+        for(int j=0; j<i; j++)
+        {
+            Y[i]-=L[i][j]*Y[j];
+        }
+    }
+    
+    // Calculating final value X matrix
+    for(int i=n-1; i>=0; i--)
+    {
+        X[i]= Y[i];
+        for(int j=i+1; j<n; j++)
+        {
+            X[i]-=U[i][j]*X[j];
+        }
+        X[i]/=U[i][i];
+    }
+
+
+    // Debugging and optimalisation purposes 
+    //
+    for (int i = 0; i < n; i++)
+    {
+        free(U[i]);
+        free(L[i]);
+    }
+    
+    free(L);
+    free(U);
+    free(Y);
+    //
 }
