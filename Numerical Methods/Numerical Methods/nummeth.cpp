@@ -310,7 +310,7 @@ double RBFIterpolation(Point point[], double x0, double eps)
     {
         for (int j = 0; j < n; j++)
         {
-            A[j][i] = RBF(fabs(point[j].x - point[i].x), eps);
+            A[j][i] = GaussRBF(fabs(point[j].x - point[i].x), eps);
         }
      
         b[i] = point[i].y;
@@ -322,7 +322,7 @@ double RBFIterpolation(Point point[], double x0, double eps)
 
     for (int i = 0; i < n; i++)
     {
-            y0 += lambda[i]*RBF(fabs(x0 - point[i].x), eps);
+            y0 += lambda[i]*GaussRBF(fabs(x0 - point[i].x), eps);
     }
     
 
@@ -334,7 +334,7 @@ double RBFIterpolation(Point point[], double x0, double eps)
 //
 // Gaussian Radial Basis Function 
 //
-double RBF(double r, double eps)
+double GaussRBF(double r, double eps)
 {
     return exp(-eps*pow(r, 2.));
 }
