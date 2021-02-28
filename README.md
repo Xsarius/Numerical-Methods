@@ -7,7 +7,7 @@ The only puropses of this repo are to get a better understanging how calculation
 
 ### v1.2 (Mar 2021)
 
-Added: 
+#### Added: 
 - Root finding:
     - Muller method
 
@@ -22,7 +22,6 @@ Added:
 - Matricies:
     - Linear System solver
 
----
 
 Differentiation:
 - Derivative 
@@ -43,14 +42,15 @@ Root finding:
 - Newton method
 - Secant method
 
+---
+
 ### v1.1 (Feb 2021)
 
-Added:
+#### Added:
 - Differentiation:
     - Runge-Kutta 4th order method
     - Euler method
 
----
 
 Differentiation:
 - Derivative 
@@ -66,6 +66,8 @@ Root finding:
 - Regula falsi method
 - Newton method
 - Secant method
+
+---
 
 ### v1.0 (Feb 2021)
 #### Initial version.
