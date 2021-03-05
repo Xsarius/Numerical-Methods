@@ -262,9 +262,9 @@ double RungeKutta(double (*f)(double, double), double x0, double y0, double x, d
     return y;
 }
 //
-// Lagrange interpolation
+// PolynomialIter interpolation
 //
-double Lagrange(Point p[], int x, int n)
+double PolynomialIter(Point p[], int x, int n)
 {
     double r = 0, term = 0;
 
@@ -287,7 +287,7 @@ double Lagrange(Point p[], int x, int n)
 //
 // Bilinear interpolation
 //
-double Linear(Point p[2], double x)
+double LinearIter(Point p[2], double x)
 {
     double m = (p[1].y-p[0].y)/(p[1].x-p[0].x);
     double b = p[0].y - m*p[0].x;
@@ -297,7 +297,7 @@ double Linear(Point p[2], double x)
 //
 // Radial Basis Interpolation
 //
-double RBFIterpolation(Point point[], double x0, double eps)
+double RBFIter(Point point[], double x0, double eps)
 {
     int n = 3;
 
@@ -332,11 +332,125 @@ double RBFIterpolation(Point point[], double x0, double eps)
     return y0;
 }
 //
+// Newton Forward Difference Interpolation 
+// 
+double NewtonFWDInter(Point p[], double x0)
+{
+    int n = 4;
+
+    double **y = (double **)malloc(n * sizeof(double*));
+
+    for (int i = 0; i < n; i++)
+    {
+        y[i] = (double *)malloc(n * sizeof(double));
+        y[i][0] = p[i].y;
+    }
+
+    for(int i = 1; i < n; i++)
+    {
+        for(int j = 0; j < n-i; j++)
+        {
+            y[j][i] = y[j+1][i-1] - y[j][i-1];
+        }
+    }
+
+    double sum = y[0][0];
+    double u = (x0 - p[0].x) / (p[1].x - p[0].x);
+    double temp;
+
+    for (int i = 1; i < n; i++)
+    {
+        temp = u;
+        for (int k = 1; k < i; k++)
+        {
+            temp *= (u - k);
+        }
+        
+        sum += (temp * y[0][i]) / Factorial(i);
+    }
+    
+    
+    for (int i = 0; i < n; i++)
+    {
+        free(y[i]);
+    }
+
+    free(y);
+    
+    return sum;
+}
+//
+// Newton Forward Difference Interpolation 
+//
+double NewtonRWDInter(Point p[], double x0)
+{
+    int n = 5;
+
+    printf("%d\n", n);
+
+    double **y = (double **)malloc(n * sizeof(double*));
+
+    for (int i = 0; i < n; i++)
+    {
+        y[i] = (double *)malloc(n * sizeof(double));
+        y[i][0] = p[i].y;
+    }
+    
+    for (int i = 1; i < n; i++) 
+    { 
+        for (int j = n - 1; j >= i; j--)
+        {
+            y[j][i] = y[j][i - 1] - y[j - 1][i - 1]; 
+        } 
+    } 
+
+    double sum = y[n-1][0];
+    double temp;
+    double u = (x0 - p[n-1].x)/(p[1].x - p[0].x);
+
+    for (int i = 1; i < n; i++)
+    {
+        temp = u;
+        for (int k = 1; k < i; k++)
+        {
+            temp *= (u + k);
+        }
+
+        sum += (temp*y[n-1][i]) / Factorial(i);
+    }
+    
+    
+    for (int i = 0; i < n; i++)
+    {
+        free(y[i]);
+    }
+
+    free(y);
+    
+    printf("NewtonRWD: %.4f\n", sum);
+
+    return sum;
+}
+//
 // Gaussian Radial Basis Function 
 //
 double GaussRBF(double r, double eps)
 {
     return exp(-eps*pow(r, 2.));
+}
+//
+// Factiorial function
+//
+int Factorial(int x)
+{
+    double temp = 1;
+    
+    for (int i = 2; i <= x; i++)
+    {
+        temp *= i;
+    }
+
+    return temp;
 }
 //
 // Matrix equation solver

@@ -244,7 +244,7 @@ double RungeKutta(double (*function)(double, double), double x0, double y0, doub
 //
 //  Interpolation //
 //
-// Lagrange's Interpolation
+// Polynomial Interpolation
 //
 //  Summary:
 //      Method of finding new data points within the range of a known data points.
@@ -259,7 +259,7 @@ double RungeKutta(double (*function)(double, double), double x0, double y0, doub
 //  Returns:
 //      Value of a point at given argument x.
 //
-double Lagrange(Point point[], int x, int ptsNum);
+double PolynomialIter(Point point[], int x, int ptsNum);
 //
 // Linear Interpolation
 //
@@ -275,7 +275,7 @@ double Lagrange(Point point[], int x, int ptsNum);
 //  Returns:
 //      Value aproximation at point x.
 //
-double Linear(Point point[2], double x);
+double LinearIter(Point point[2], double x);
 //
 // GaussRBF Interpolation
 //
@@ -292,7 +292,37 @@ double Linear(Point point[2], double x);
 //  Returns:
 //      Value aproximation at point x.
 //
-double RBFIterpolation(Point points[], double x, double shapeParameter);
+double RBFIter(Point points[], double x, double shapeParameter);
+//
+// Newton Forward Difference Interpolation 
+// 
+//  Summary:
+//      Interpolation method in which forward difference is used to aproximate value at a sub-point.
+//      
+//  Variables:
+//      points - array of known points combined, arguments with their values.
+//
+//      x - wanted point.
+//      
+//  Returns:
+//      Value aproximation at point x.
+//
+double NewtonFWDInter(Point points[], double x);
+//
+// Newton Reverse Difference Interpolation 
+// 
+//  Summary:
+//      Interpolation method in which reverse difference is used to aproximate value at a sub-point.
+//      
+//  Variables:
+//      points - array of known points combined, arguments with their values.
+//
+//      x - wanted point.
+//      
+//  Returns:
+//      Value aproximation at point x.
+//
+double NewtonRWDInter(Point points[], double x);
 //
 //  Functions //
 //
@@ -305,14 +335,28 @@ double RBFIterpolation(Point points[], double x, double shapeParameter);
 //      r - distance between chosen point and reference point.
 //
 //      eps - shape factor, can be arbitrarly chosen natural number. 
-//  Returns:
 //
+//  Returns:
+//      RBF function value.
 //
 double GaussRBF(double r, double eps);
 //
+// Factorial function
+//
+//  Summary:
+//      Function calculating factorial of a given number n! = n * n-1 *...* 2 * 1.
+//
+//  Variables:
+//      x - base of the factorial.
+//
+//  Returns:
+//      Factorial of a number x.
+//
+int Factorial(int x);
+//
 //  Matricies //
 //
-// Linear System Solver
+// LinearIter System Solver
 //
 //  Summary:
 //      Function solves system of the linear equations AX = B.
