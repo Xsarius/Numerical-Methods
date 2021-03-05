@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+*.json
+Numerical Methods/Numerical Methods.sln
+Numerical Methods/Numerical Methods/main.cpp
+Numerical Methods/Numerical Methods/Numerical Methods.vcxproj
+Numerical Methods/Numerical Methods/Numerical Methods.vcxproj.filters
+Numerical Methods/Numerical Methods/nummeth.cpp
+Numerical Methods/Numerical Methods/nummeth.cpp
