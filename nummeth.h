@@ -374,6 +374,19 @@ int Factorial(int x);
 //      unknownsMatrix - array in which the results will be saved.
 //
 void SolveLinearSystem(int matricies1DSize,double coefficientsMatrix[][MAX_MATRIX_SIZE], double valueMatrix[], double unknownsMatrix[]);
+//
+//  Extrapolation // 
+//
+// Aitken's delta-squared process
+//
+//  Summary:
+//
+//
+//  Variables:
+//
+// 
+//
+void DeltaSqExtrapol(double (*function)(double), double x);
 
 
 

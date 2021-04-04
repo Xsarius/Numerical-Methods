@@ -5,6 +5,41 @@ The only puropses of this repo are to get a better understanging how calculation
 
 ## Versions
 
+### v1.4 (Mar 2021)
+
+#### Changes:
+
+
+#### Content:
+
+- Differentiation:
+    - Derivative 
+    - Runge-Kutta 4th order method
+    - Euler method
+
+- Integration:
+    - Simpson method
+    - Trapeze method
+
+- Interpolation:
+    - Polynomial interpolation
+    - Linear interpolation
+    - Radial Basis Function interpolation
+
+- Root finding:
+    - Muller method
+    - Bisec method
+    - Regula falsi method
+    - Newton method
+    - Secant method
+
+- Functions:
+    - Gauss Radial Basis Function
+    - Factorial function
+
+- Matricies:
+    - Linear System solver
+
 ### v1.3 (Mar 2021)
 
 #### Changes:
